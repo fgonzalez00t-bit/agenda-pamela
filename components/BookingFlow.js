@@ -51,6 +51,15 @@ export default function BookingFlow({ treatments, business }) {
     };
   }, [treatment]);
 
+  const groups = useMemo(() => {
+    const map = new Map();
+    for (const t of treatments) {
+      if (!map.has(t.category)) map.set(t.category, []);
+      map.get(t.category).push(t);
+    }
+    return [...map];
+  }, [treatments]);
+
   const availableDates = useMemo(() => Object.keys(days ?? {}).sort(), [days]);
 
   function chooseTreatment(t) {
@@ -115,24 +124,29 @@ export default function BookingFlow({ treatments, business }) {
       <section className="card">
         <h2><span className="step">1</span> Elegí tu tratamiento</h2>
         {treatments.length === 0 && <p className="muted">Por el momento no hay tratamientos disponibles para reservar online.</p>}
-        <div className="treatments">
-          {treatments.map((t) => (
-            <button
-              key={t.id}
-              type="button"
-              className={`treatment ${treatment?.id === t.id ? 'selected' : ''}`}
-              onClick={() => chooseTreatment(t)}
-              aria-pressed={treatment?.id === t.id}
-            >
-              <span className="treatment-name">{t.name}</span>
-              {t.description && <span className="treatment-desc">{t.description}</span>}
-              <span className="treatment-meta">
-                <span>⏱ {formatDuration(t.duration_min)} aprox.</span>
-                <span className="price">{formatPrice(t.price, business.currency)}</span>
-              </span>
-            </button>
-          ))}
-        </div>
+        {groups.map(([category, list]) => (
+          <div key={category || 'otros'}>
+            {category && <h3 className="category-title">{category}</h3>}
+            <div className="treatments">
+              {list.map((t) => (
+                <button
+                  key={t.id}
+                  type="button"
+                  className={`treatment ${treatment?.id === t.id ? 'selected' : ''}`}
+                  onClick={() => chooseTreatment(t)}
+                  aria-pressed={treatment?.id === t.id}
+                >
+                  <span className="treatment-name">{t.name}</span>
+                  {t.description && <span className="treatment-desc">{t.description}</span>}
+                  <span className="treatment-meta">
+                    <span>⏱ {formatDuration(t.duration_min)} aprox.</span>
+                    <span className="price">{formatPrice(t.price, t.currency, t.price_from)}</span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
       </section>
 
       {treatment && (
@@ -181,7 +195,7 @@ export default function BookingFlow({ treatments, business }) {
         <section className="card">
           <h2><span className="step">3</span> Tus datos</h2>
           <p className="summary">
-            {treatment.name} · {formatDate(date)} · {time} hs · {formatPrice(treatment.price, business.currency)}
+            {treatment.name} · {formatDate(date)} · {time} hs · {formatPrice(treatment.price, treatment.currency, treatment.price_from)}
           </p>
           <form onSubmit={submit} className="form">
             <label>
@@ -190,7 +204,7 @@ export default function BookingFlow({ treatments, business }) {
             </label>
             <label>
               WhatsApp
-              <input required type="tel" inputMode="tel" placeholder="11 2345 6789" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} autoComplete="tel" />
+              <input required type="tel" inputMode="tel" placeholder="099 123 456" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} autoComplete="tel" />
             </label>
             <label>
               Comentario (opcional)

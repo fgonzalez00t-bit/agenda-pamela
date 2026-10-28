@@ -42,10 +42,13 @@ export async function setBookingStatus(fd) {
 // Tratamientos
 function treatmentFields(fd) {
   const t = {
+    category: str(fd, 'category'),
     name: str(fd, 'name'),
     description: str(fd, 'description'),
     duration_min: Number(fd.get('duration_min')),
     price: Number(fd.get('price')),
+    currency: str(fd, 'currency') === 'USD' ? 'USD' : 'UYU',
+    price_from: fd.get('price_from') === 'on',
     sort: Number(fd.get('sort') || 0),
     active: fd.get('active') === 'on',
   };

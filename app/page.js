@@ -8,7 +8,8 @@ export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   const treatments = await sql`
-    select id, name, description, duration_min, price from treatments where active order by sort, name`;
+    select id, category, name, description, duration_min, price, currency, price_from
+    from treatments where active order by sort, name`;
 
   return (
     <main className="page">

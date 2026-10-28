@@ -1,14 +1,8 @@
 import { config } from '@/lib/config';
-import { formatDate, formatPrice, waLink } from '@/lib/format';
+import { formatDate, formatPrice, intlPhone, waLink } from '@/lib/format';
 import { setBookingStatus } from './actions';
 
 const STATUS = { pending: 'Pendiente', confirmed: 'Confirmada', cancelled: 'Cancelada' };
-
-// Para números argentinos sin código de país, agrega 549 al abrir WhatsApp.
-function clientWaNumber(phone) {
-  const digits = phone.replace(/\D/g, '').replace(/^0/, '');
-  return digits.length <= 10 ? `549${digits.replace(/^15/, '')}` : digits;
-}
 
 export default function BookingCard({ booking: b, back }) {
   const when = `${formatDate(b.date).toLowerCase()} a las ${b.start_time}`;
@@ -21,7 +15,7 @@ export default function BookingCard({ booking: b, back }) {
         <div>
           <span className={`badge ${b.status}`}>{STATUS[b.status]}</span>
           <h3>{b.start_time}–{b.end_time} · {b.treatment_name}</h3>
-          <p className="muted">{formatDate(b.date)} · {formatPrice(b.price, config.currency)}</p>
+          <p className="muted">{formatDate(b.date)} · {formatPrice(b.price, b.currency)}</p>
           <p>
             <strong>{b.client_name}</strong> · <a href={`tel:${b.client_phone}`}>{b.client_phone}</a>
           </p>
@@ -47,7 +41,7 @@ export default function BookingCard({ booking: b, back }) {
         )}
         <a
           className="btn btn-sm btn-wa"
-          href={waLink(clientWaNumber(b.client_phone), b.status === 'cancelled' ? cancelMsg : confirmMsg)}
+          href={waLink(intlPhone(b.client_phone, config.countryCode), b.status === 'cancelled' ? cancelMsg : confirmMsg)}
           target="_blank"
           rel="noopener noreferrer"
         >

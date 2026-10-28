@@ -33,8 +33,8 @@ export async function POST(request) {
     if (!days?.[date]?.includes(time)) return null;
     const [treatment] = await tx`select * from treatments where id = ${treatmentId}`;
     const [row] = await tx`
-      insert into bookings (treatment_id, treatment_name, price, date, start_time, end_time, client_name, client_phone, notes)
-      values (${treatment.id}, ${treatment.name}, ${treatment.price}, ${date}, ${time},
+      insert into bookings (treatment_id, treatment_name, price, currency, date, start_time, end_time, client_name, client_phone, notes)
+      values (${treatment.id}, ${treatment.name}, ${treatment.price}, ${treatment.currency}, ${date}, ${time},
               ${fromMin(toMin(time) + treatment.duration_min)}, ${name}, ${phone}, ${notes})
       returning *`;
     return row;
@@ -47,7 +47,7 @@ export async function POST(request) {
   await notifyOwner(
     [
       '🗓️ *Nueva reserva pendiente*',
-      `${booking.treatment_name} (${formatPrice(booking.price, config.currency)})`,
+      `${booking.treatment_name} (${formatPrice(booking.price, booking.currency)})`,
       `${formatDate(booking.date)} a las ${booking.start_time}`,
       `Clienta/e: ${booking.client_name} · ${booking.client_phone}`,
       ...(booking.notes ? [`Nota: ${booking.notes}`] : []),

@@ -49,5 +49,11 @@ create table if not exists bookings (
   created_at timestamptz not null default now()
 );
 
+-- Agregados después de la primera versión
+alter table treatments add column if not exists category text not null default '';
+alter table treatments add column if not exists currency text not null default 'UYU';
+alter table treatments add column if not exists price_from boolean not null default false;
+alter table bookings add column if not exists currency text not null default 'UYU';
+
 create index if not exists bookings_date_idx on bookings (date);
 create index if not exists blocked_slots_date_idx on blocked_slots (date);

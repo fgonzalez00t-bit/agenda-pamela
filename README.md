@@ -6,7 +6,7 @@ Web de reservas para un consultorio de medicina estética.
 - **Pamela** (`/admin`): confirma o rechaza reservas, edita o pausa tratamientos, define su horario semanal y bloquea días completos o franjas puntuales.
 - **Aviso por WhatsApp**: con cada reserva nueva, Pamela recibe un mensaje con el link para confirmarla (vía CallMeBot, gratis).
 
-Hecho con Next.js 15 y Postgres.
+Hecho con Next.js 15 y Postgres. Los tratamientos, precios (en $ o USD) y el horario inicial (lunes a viernes de 9 a 18, hora de Uruguay) están en `db/seed.sql`; las duraciones son estimadas y se corrigen desde el panel.
 
 ## Puesta en marcha
 

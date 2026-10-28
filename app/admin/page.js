@@ -84,10 +84,18 @@ function TreatmentForm({ t, back }) {
     <form action={saveTreatment} className={`treatment-form ${t && !t.active ? 'inactive' : ''}`}>
       <input type="hidden" name="back" value={back} />
       {t && <input type="hidden" name="id" value={t.id} />}
+      <label className="grow">Categoría<input name="category" defaultValue={t?.category} list="categories" /></label>
       <label className="grow">Nombre<input name="name" defaultValue={t?.name} required /></label>
       <label className="grow2">Detalle<input name="description" defaultValue={t?.description} /></label>
       <label>Duración (min)<input name="duration_min" type="number" min="5" step="5" defaultValue={t?.duration_min ?? 30} required /></label>
+      <label className="xs">Moneda
+        <select name="currency" defaultValue={t?.currency ?? 'UYU'}>
+          <option value="UYU">$</option>
+          <option value="USD">USD</option>
+        </select>
+      </label>
       <label>Precio<input name="price" type="number" min="0" step="any" defaultValue={t?.price} required /></label>
+      <label className="check-label"><input type="checkbox" name="price_from" defaultChecked={t?.price_from} /> “desde”</label>
       <label className="xs">Orden<input name="sort" type="number" defaultValue={t?.sort ?? 0} /></label>
       <label className="check-label"><input type="checkbox" name="active" defaultChecked={t ? t.active : true} /> Disponible</label>
       <div className="row-actions">
@@ -100,9 +108,11 @@ function TreatmentForm({ t, back }) {
 
 async function Treatments({ back }) {
   const treatments = await sql`select * from treatments order by sort, name`;
+  const categories = [...new Set(treatments.map((t) => t.category).filter(Boolean))];
   return (
     <section className="card">
-      <p className="muted">Destildá “Disponible” para pausar un tratamiento: deja de aparecer en la agenda sin borrarlo.</p>
+      <datalist id="categories">{categories.map((c) => <option key={c} value={c} />)}</datalist>
+      <p className="muted">Destildá “Disponible” para pausar un tratamiento: deja de aparecer en la agenda sin borrarlo. Marcá “desde” cuando el precio final depende de la paciente. El orden define en qué posición aparece.</p>
       {treatments.map((t) => (
         <TreatmentForm key={t.id} t={t} back={back} />
       ))}
