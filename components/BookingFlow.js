@@ -97,23 +97,29 @@ export default function BookingFlow({ treatments, business }) {
   }
 
   if (done) {
-    const message = `Hola Pamela! Soy ${form.name}. Acabo de reservar ${treatment.name} para el ${formatDate(date).toLowerCase()} a las ${time}.`;
+    const message = [
+      `Hola Pamela! Soy ${form.name}. Acabo de reservar ${treatment.name} para el ${formatDate(date).toLowerCase()} a las ${time}.`,
+      `Para confirmarla: ${window.location.origin}/admin/reserva/${done.id}`,
+    ].join('\n\n');
     return (
       <section className="card center">
         <div className="check">✓</div>
-        <h2>¡Reserva enviada!</h2>
+        <h2>¡Ya casi está!</h2>
         <p>
           <strong>{treatment.name}</strong>
           <br />
           {formatDate(date)} · {time} hs
         </p>
-        <p className="muted">
-          Tu turno queda pendiente hasta que {business.businessName} lo confirme. Te va a escribir al {form.phone}.
-        </p>
-        {business.whatsappNumber && (
-          <a className="btn btn-wa" href={waLink(business.whatsappNumber, message)} target="_blank" rel="noopener noreferrer">
-            <WhatsAppIcon /> Avisarle por WhatsApp
-          </a>
+        {business.whatsappNumber ? (
+          <>
+            <p><strong>Último paso:</strong> enviale el aviso a {business.businessName} por WhatsApp para que confirme tu turno.</p>
+            <a className="btn btn-wa btn-lg" href={waLink(business.whatsappNumber, message)} target="_blank" rel="noopener noreferrer">
+              <WhatsAppIcon /> Enviar aviso por WhatsApp
+            </a>
+            <p className="muted small">El turno queda reservado a tu nombre y pendiente hasta que Pamela lo confirme.</p>
+          </>
+        ) : (
+          <p className="muted">Tu turno queda pendiente hasta que {business.businessName} lo confirme. Te va a escribir al {form.phone}.</p>
         )}
       </section>
     );

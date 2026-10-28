@@ -91,6 +91,8 @@ input:focus, textarea:focus { outline: 2px solid var(--accent-soft); border-colo
 .btn-sm { padding: 7px 14px; font-size: .9rem; }
 .btn-ghost { background: transparent; color: var(--accent); }
 .btn-wa { background: var(--wa); border-color: var(--wa); color: #fff; }
+.btn-lg { padding: 15px 26px; font-size: 1.05rem; margin: 6px 0 4px; }
+.small { font-size: .85rem; }
 .check { width: 56px; height: 56px; border-radius: 50%; background: var(--pink); color: var(--accent); display: grid; place-items: center; font-size: 1.6rem; margin: 0 auto 12px; }
 
 /* Panel */
