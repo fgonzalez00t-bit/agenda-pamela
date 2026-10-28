@@ -215,3 +215,5 @@ input:focus, textarea:focus { outline: 2px solid var(--accent-soft); border-colo
 .booking-form { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
 .form-title { font-family: var(--serif); font-size: 1.4rem; margin: 0; }
 .done-card { max-width: 520px; margin: 0 auto; }
+.booking-done .hero, .booking-done .footer { display: none; }
+.booking-done .section { padding-top: 40px; }

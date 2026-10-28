@@ -82,6 +82,11 @@ export default function BookingFlow({ treatments, business }) {
     };
   }, [treatment]);
 
+  // Con la reserva hecha, se oculta el encabezado (nombre, formación, redes) y queda solo la confirmación.
+  useEffect(() => {
+    document.body.classList.toggle('booking-done', Boolean(done));
+  }, [done]);
+
   const groups = useMemo(() => {
     const map = new Map();
     for (const t of treatments) {
