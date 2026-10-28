@@ -6,11 +6,11 @@ import { waLink } from '@/lib/format';
 
 export const dynamic = 'force-dynamic';
 
-// Logos de formación debajo del nombre. Con `src` vacío se muestra el nombre como texto.
-const LOGOS = [
-  { name: 'Udelar', src: '' },
-  { name: 'UM', src: '' },
-  { name: 'Matías González', src: '' },
+// Formación de Pamela, debajo del nombre.
+const CREDENTIALS = [
+  { name: 'UdelaR', detail: 'Medicina general', src: '/logos/udelar.png' },
+  { name: 'UM', detail: 'Formación avanzada en medicina estética', src: '/logos/um.png' },
+  { name: 'MG', detail: 'Cosmetología integral', src: '/logos/mg.png' },
 ];
 
 export default async function Home() {
@@ -24,15 +24,17 @@ export default async function Home() {
         <p className="eyebrow">{config.tagline}</p>
         <h1>{config.businessName}</h1>
         {config.address && <p className="muted">{config.address}</p>}
-        <div className="logos">
-          {LOGOS.map((logo) =>
-            logo.src ? (
-              <img key={logo.name} src={logo.src} alt={logo.name} className="logo" />
-            ) : (
-              <span key={logo.name} className="logo logo-placeholder">{logo.name}</span>
-            ),
-          )}
-        </div>
+        <ul className="credentials">
+          {CREDENTIALS.map((c) => (
+            <li key={c.name}>
+              <img src={c.src} alt="" className="credential-logo" />
+              <span>
+                <strong>{c.name}</strong>
+                {c.detail}
+              </span>
+            </li>
+          ))}
+        </ul>
         <nav className="social">
           <a href={config.instagramUrl} target="_blank" rel="noopener noreferrer" className="pill">
             <InstagramIcon /> Instagram
