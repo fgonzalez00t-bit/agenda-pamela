@@ -23,6 +23,7 @@ function addDaysIso(date, n) {
 
 export default function BookingFlow({ treatments, business }) {
   const [treatment, setTreatment] = useState(null);
+  const [openCategory, setOpenCategory] = useState(null);
   const [days, setDays] = useState(null);
   const [loadError, setLoadError] = useState('');
   const [month, setMonth] = useState(() => {
@@ -130,29 +131,48 @@ export default function BookingFlow({ treatments, business }) {
       <section className="card">
         <h2><span className="step">1</span> Elegí tu tratamiento</h2>
         {treatments.length === 0 && <p className="muted">Por el momento no hay tratamientos disponibles para reservar online.</p>}
-        {groups.map(([category, list]) => (
-          <div key={category || 'otros'}>
-            {category && <h3 className="category-title">{category}</h3>}
-            <div className="treatments">
-              {list.map((t) => (
+        <div className="categories">
+          {groups.map(([category, list]) => {
+            const open = openCategory === category;
+            const chosenHere = list.some((t) => t.id === treatment?.id);
+            return (
+              <div key={category || 'otros'} className={`category ${open ? 'open' : ''}`}>
                 <button
-                  key={t.id}
                   type="button"
-                  className={`treatment ${treatment?.id === t.id ? 'selected' : ''}`}
-                  onClick={() => chooseTreatment(t)}
-                  aria-pressed={treatment?.id === t.id}
+                  className="category-toggle"
+                  onClick={() => setOpenCategory(open ? null : category)}
+                  aria-expanded={open}
                 >
-                  <span className="treatment-name">{t.name}</span>
-                  {t.description && <span className="treatment-desc">{t.description}</span>}
-                  <span className="treatment-meta">
-                    <span>⏱ {formatDuration(t.duration_min)} aprox.</span>
-                    <span className="price">{formatPrice(t.price, t.currency, t.price_from)}</span>
+                  <span>
+                    {category || 'Otros tratamientos'}
+                    {!open && chosenHere && <span className="category-chosen">{treatment.name}</span>}
                   </span>
+                  <span className="chevron" aria-hidden="true">{open ? '−' : '+'}</span>
                 </button>
-              ))}
-            </div>
-          </div>
-        ))}
+                {open && (
+                  <div className="treatments">
+                    {list.map((t) => (
+                      <button
+                        key={t.id}
+                        type="button"
+                        className={`treatment ${treatment?.id === t.id ? 'selected' : ''}`}
+                        onClick={() => chooseTreatment(t)}
+                        aria-pressed={treatment?.id === t.id}
+                      >
+                        <span className="treatment-name">{t.name}</span>
+                        {t.description && <span className="treatment-desc">{t.description}</span>}
+                        <span className="treatment-meta">
+                          <span>⏱ {formatDuration(t.duration_min)} aprox.</span>
+                          <span className="price">{formatPrice(t.price, t.currency, t.price_from)}</span>
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </section>
 
       {treatment && (
