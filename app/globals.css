@@ -1,17 +1,26 @@
+/* Tipografía de la marca: Laisha para títulos (si se sube el archivo a public/fonts) con Marcellus
+   como alternativa similar, y DM Sans para textos. */
+@font-face {
+  font-family: 'Laisha';
+  src: url('/fonts/Laisha.woff2') format('woff2'), url('/fonts/Laisha.otf') format('opentype');
+  font-display: swap;
+}
+
 :root {
-  --bg: #f7f1ec;
-  --surface: #ffffff;
-  --ink: #2f2622;
-  --muted: #7d6d66;
-  --line: #eadfd8;
-  --accent: #a8655a;
-  --accent-ink: #ffffff;
-  --accent-soft: #f4e4de;
+  --bg: #F5ECEE;
+  --surface: #fffafa;
+  --ink: #4E3A2F;
+  --muted: #86726a;
+  --line: #ead8da;
+  --pink: #E0C2C4;
+  --accent: #4E3A2F;
+  --accent-ink: #F5ECEE;
+  --accent-soft: #f1e0e1;
   --wa: #1f9d55;
   --danger: #b4423a;
   --radius: 14px;
-  --serif: 'Cormorant Garamond', Georgia, serif;
-  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --serif: 'Laisha', 'Marcellus', Georgia, serif;
+  --sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -20,6 +29,7 @@ body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-
 a { color: var(--accent); }
 h1, h2, h3 { margin: 0 0 .5rem; line-height: 1.2; }
 h2 { font-size: 1.15rem; font-weight: 600; }
+.card > h2 { font-family: var(--serif); font-weight: 400; font-size: 1.45rem; }
 button, input, textarea { font: inherit; color: inherit; }
 .muted { color: var(--muted); }
 .error { color: var(--danger); margin: .25rem 0; }
@@ -30,16 +40,16 @@ button, input, textarea { font: inherit; color: inherit; }
 
 /* Encabezado público */
 .hero { text-align: center; padding: 24px 0 20px; }
-.eyebrow { text-transform: uppercase; letter-spacing: .18em; font-size: .75rem; color: var(--accent); margin: 0 0 .25rem; }
-.hero h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(2.2rem, 7vw, 3.2rem); }
+.eyebrow { text-transform: uppercase; letter-spacing: .2em; font-size: .75rem; color: var(--muted); margin: 0 0 .25rem; }
+.hero h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(2.2rem, 7vw, 3.2rem); }
 .social { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
 .pill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); color: var(--ink); text-decoration: none; font-weight: 500; font-size: .95rem; }
-.pill:hover { border-color: var(--accent); color: var(--accent); }
+.pill:hover { background: var(--pink); }
 .footer { text-align: center; font-size: .85rem; margin-top: 24px; }
 
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
 .card.center { text-align: center; }
-.step { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-size: .85rem; margin-right: 8px; vertical-align: 1px; }
+.step { display: inline-grid; place-items: center; width: 26px; height: 26px; font-family: var(--sans); border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-size: .85rem; margin-right: 8px; vertical-align: 1px; }
 
 /* Tratamientos */
 .treatments { display: grid; gap: 10px; }
@@ -59,8 +69,8 @@ button, input, textarea { font: inherit; color: inherit; }
 .cal-head button:disabled { opacity: .3; cursor: default; }
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
 .cal-dow { font-size: .75rem; color: var(--muted); padding: 4px 0; }
-.cal-day { aspect-ratio: 1; border: none; border-radius: 10px; background: transparent; color: #c4b6af; cursor: default; font-size: .95rem; }
-.cal-day.available { background: var(--accent-soft); color: var(--ink); font-weight: 600; cursor: pointer; }
+.cal-day { aspect-ratio: 1; border: none; border-radius: 10px; background: transparent; color: #c9b5b3; cursor: default; font-size: .95rem; }
+.cal-day.available { background: var(--pink); color: var(--ink); font-weight: 600; cursor: pointer; }
 .cal-day.available:hover { box-shadow: inset 0 0 0 1px var(--accent); }
 .cal-day.selected { background: var(--accent); color: var(--accent-ink); }
 .slots-title { font-weight: 600; margin: 0 0 10px; }
@@ -81,10 +91,10 @@ input:focus, textarea:focus { outline: 2px solid var(--accent-soft); border-colo
 .btn-sm { padding: 7px 14px; font-size: .9rem; }
 .btn-ghost { background: transparent; color: var(--accent); }
 .btn-wa { background: var(--wa); border-color: var(--wa); color: #fff; }
-.check { width: 56px; height: 56px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; font-size: 1.6rem; margin: 0 auto 12px; }
+.check { width: 56px; height: 56px; border-radius: 50%; background: var(--pink); color: var(--accent); display: grid; place-items: center; font-size: 1.6rem; margin: 0 auto 12px; }
 
 /* Panel */
-.admin-title { font-family: var(--serif); font-size: 2rem; font-weight: 600; }
+.admin-title { font-family: var(--serif); font-size: 2rem; font-weight: 400; }
 .admin-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
 .admin-header a { font-size: .9rem; }
 .tabs { display: flex; gap: 4px; overflow-x: auto; border-bottom: 1px solid var(--line); margin-bottom: 16px; }
@@ -96,7 +106,7 @@ input:focus, textarea:focus { outline: 2px solid var(--accent-soft); border-colo
 .subnav a { color: var(--muted); text-decoration: none; }
 .subnav a.active { color: var(--ink); font-weight: 600; }
 .day-group { margin-bottom: 20px; }
-.day-title { font-family: var(--serif); font-size: 1.4rem; font-weight: 600; }
+.day-title { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; }
 .booking { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
 .booking.status-pending { border-left-color: #e0a43a; }
 .booking.status-confirmed { border-left-color: var(--wa); }
@@ -117,7 +127,7 @@ input:focus, textarea:focus { outline: 2px solid var(--accent-soft); border-colo
 .treatment-form .grow { flex: 2 1 180px; }
 .treatment-form .grow2 { flex: 3 1 220px; }
 .treatment-form .xs { flex: 0 1 80px; }
-.category-title { font-family: var(--serif); font-size: 1.35rem; font-weight: 600; margin: 18px 0 8px; }
+.category-title { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; color: var(--muted); padding-bottom: 4px; border-bottom: 1px solid var(--pink); margin: 18px 0 8px; }
 .category-title:first-of-type { margin-top: 4px; }
 .check-label { display: flex; align-items: center; gap: 6px; flex: 0 0 auto !important; color: var(--ink); padding-bottom: 10px; }
 .check-label input { width: auto; }

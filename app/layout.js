@@ -6,7 +6,7 @@ export const metadata = {
   description: `Reservá tu turno online con ${config.businessName}, ${config.tagline.toLowerCase()}.`,
 };
 
-export const viewport = { width: 'device-width', initialScale: 1, themeColor: '#f7f1ec' };
+export const viewport = { width: 'device-width', initialScale: 1, themeColor: '#F5ECEE' };
 
 export default function RootLayout({ children }) {
   return (
@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Marcellus&display=swap"
         />
       </head>
       <body>{children}</body>
