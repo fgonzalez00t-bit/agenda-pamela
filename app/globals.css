@@ -218,3 +218,63 @@ input:focus, textarea:focus { outline: 2px solid var(--accent-soft); border-colo
 .done-card { max-width: 520px; margin: 0 auto; }
 .booking-done .hero, .booking-done .footer { display: none; }
 .booking-done .section { padding-top: 40px; }
+
+/* ---------- CRM de clientes ---------- */
+.crm-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 14px; }
+.filter-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.filter-pills a { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); text-decoration: none; font-size: .88rem; font-weight: 500; }
+.filter-pills a.active { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.pill-count { display: inline-block; min-width: 18px; margin-left: 2px; font-size: .75rem; opacity: .8; }
+.crm-search { flex: 1 1 220px; max-width: 300px; }
+.crm-search input { padding: 8px 12px; border-radius: 999px; }
+.client-list { display: grid; gap: 10px; margin-bottom: 20px; }
+.client-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--line); border-radius: 12px; padding: 12px 16px; }
+.client-row.fu-late { border-left-color: var(--danger); }
+.client-row.fu-today { border-left-color: #e0a43a; }
+.client-row.fu-soon { border-left-color: var(--pink); }
+.client-row .actions { margin-top: 0; }
+.client-row-main { min-width: 0; flex: 1 1 280px; }
+.client-row-main p { margin: 0; }
+.client-name { font-weight: 600; font-size: 1.05rem; color: var(--ink); text-decoration: none; }
+.client-name:hover { text-decoration: underline; }
+.client-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.fu-tag, .quote-tag { font-size: .78rem; padding: 2px 9px; border-radius: 999px; font-weight: 500; }
+.fu-tag.late { background: #f6dedb; color: var(--danger); }
+.fu-tag.today { background: #fbefd8; color: #8a5a07; }
+.fu-tag.soon, .fu-tag.later { background: var(--accent-soft); color: var(--ink); }
+.quote-tag { background: #ece4f3; color: #5b3f78; }
+
+.client-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+.client-header p { margin: 0 0 6px; }
+.client-stats { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .88rem; color: var(--muted); }
+.client-stats strong { color: var(--ink); }
+.client-grid { display: grid; gap: 16px; }
+@media (min-width: 860px) { .client-grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: start; } }
+.client-col > .card { margin-bottom: 16px; }
+.followup-card.fu-late { border-color: #e7b9b4; }
+.followup-card.fu-today { border-color: #ecd09a; }
+.followup-now { font-size: 1.02rem; }
+.mini-title { font-size: .95rem; margin: 6px 0 0; }
+.more { margin-top: 12px; }
+.more > summary { cursor: pointer; color: var(--accent); font-weight: 500; font-size: .92rem; margin-bottom: 10px; }
+.more .inline-form .xs { flex: 0 1 80px; }
+.danger-zone > summary { color: var(--muted); }
+.crm-list { list-style: none; padding: 0; margin: 0; }
+.crm-list li { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.crm-list li:last-child { border-bottom: none; }
+.crm-list li > div:first-child { min-width: 0; flex: 1 1 200px; }
+.crm-list li .actions { margin-top: 0; align-items: center; }
+.crm-list li.faded { opacity: .55; }
+.crm-list .badge { margin-right: 8px; }
+.item-title { font-weight: 600; color: var(--ink); text-decoration: none; }
+.item-meta { display: block; font-size: .88rem; color: var(--muted); }
+.item-date { display: inline-block; font-size: .8rem; font-weight: 600; color: var(--muted); margin-right: 8px; }
+.crm-list .note { margin: 4px 0 0; font-size: .9rem; }
+.note-body { margin: 2px 0 0; white-space: pre-wrap; }
+.notes { margin-top: 12px; }
+.badge.q-sent { background: #ece4f3; color: #5b3f78; }
+.badge.q-accepted { background: #dcf2e4; color: #17683a; }
+.badge.q-rejected { background: #f1e5e4; color: var(--danger); }
+textarea { resize: vertical; }
+.crm-list li.quote { flex-direction: column; align-items: stretch; }
+.crm-list li.quote > div:first-child { flex: none; }
