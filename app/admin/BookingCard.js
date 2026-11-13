@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { config } from '@/lib/config';
 import { formatDate, formatPrice, intlPhone, waLink } from '@/lib/format';
 import { setBookingStatus } from './actions';
@@ -17,7 +18,7 @@ export default function BookingCard({ booking: b, back }) {
           <h3>{b.start_time}–{b.end_time} · {b.treatment_name}</h3>
           <p className="muted">{formatDate(b.date)} · {formatPrice(b.price, b.currency)}</p>
           <p>
-            <strong>{b.client_name}</strong> · <a href={`tel:${b.client_phone}`}>{b.client_phone}</a>
+            {b.client_id ? <Link href={`/admin/clientes/${b.client_id}`}><strong>{b.client_name}</strong></Link> : <strong>{b.client_name}</strong>} · <a href={`tel:${b.client_phone}`}>{b.client_phone}</a>
           </p>
           {b.notes && <p className="note">“{b.notes}”</p>}
         </div>

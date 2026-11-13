@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getAvailability } from '@/lib/availability';
 import { config } from '@/lib/config';
+import { linkBookingToClient } from '@/lib/clients';
 import { sql } from '@/lib/db';
 import { formatDate, formatPrice } from '@/lib/format';
 import { fromMin, isDate, isTime, toMin } from '@/lib/time';
@@ -43,6 +44,8 @@ export async function POST(request) {
   if (!booking) {
     return NextResponse.json({ error: 'Ese horario ya no está disponible. Elegí otro, por favor.' }, { status: 409 });
   }
+
+  await linkBookingToClient(booking);
 
   await notifyOwner(
     [

@@ -9,23 +9,27 @@ import {
   addHours, blockDays, blockSlot, deleteHours, deleteTreatment, logout, saveTreatment, unblockDay, unblockSlot,
 } from './actions';
 import BookingCard from './BookingCard';
+import ClientList from './clientes/ClientList';
 
 export const dynamic = 'force-dynamic';
 export const metadata = { title: 'Panel · Agenda' };
 
 const TABS = [
   ['reservas', 'Reservas'],
+  ['clientes', 'Clientes'],
   ['tratamientos', 'Tratamientos'],
   ['horarios', 'Horarios'],
   ['bloqueos', 'Bloqueos'],
 ];
 
 export default async function AdminPage({ searchParams }) {
-  const { tab = 'reservas', msg, ver } = await searchParams;
+  const { tab = 'reservas', msg, ver, f, q } = await searchParams;
   await requireAdmin(`/admin?tab=${tab}`);
   const { today } = bookingWindow();
   const back = `/admin?tab=${tab}${ver ? `&ver=${ver}` : ''}`;
   const [{ pending }] = await sql`select count(*)::int as pending from bookings where status = 'pending' and date >= ${today}`;
+  const [{ toContact }] = await sql`select count(*)::int as "toContact" from clients where next_followup <= ${today}`.catch(() => [{ toContact: 0 }]);
+  const badges = { reservas: pending, clientes: toContact };
 
   return (
     <main className="page wide">
@@ -40,7 +44,7 @@ export default async function AdminPage({ searchParams }) {
       <nav className="tabs">
         {TABS.map(([key, label]) => (
           <Link key={key} href={`/admin?tab=${key}`} className={tab === key ? 'active' : ''}>
-            {label}{key === 'reservas' && pending > 0 && <span className="count">{pending}</span>}
+            {label}{badges[key] > 0 && <span className="count">{badges[key]}</span>}
           </Link>
         ))}
       </nav>
@@ -48,6 +52,7 @@ export default async function AdminPage({ searchParams }) {
       {msg && <p className="flash">{msg}</p>}
 
       {tab === 'reservas' && <Bookings today={today} ver={ver} back={back} />}
+      {tab === 'clientes' && <ClientList today={today} f={f} q={q} />}
       {tab === 'tratamientos' && <Treatments back={back} />}
       {tab === 'horarios' && <Hours back={back} />}
       {tab === 'bloqueos' && <Blocks today={today} back={back} />}
